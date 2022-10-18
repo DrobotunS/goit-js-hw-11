@@ -1,0 +1,5 @@
+export const refs = {
+    form: document.querySelector('#search-form'),
+    list: document.querySelector('.gallery-list'),
+    loadMoreBtn: document.querySelector('.load-more'),
+  };

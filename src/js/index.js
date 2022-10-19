@@ -1,4 +1,6 @@
 import '../css/styles.css';
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
 import { Notify } from "notiflix/build/notiflix-notify-aio";
 import { Pixabay } from './Pixabay';
 import {createMarkup} from './createMarkup';
@@ -9,13 +11,26 @@ const options = {
     root: null,
     rootMargin: '100px',
     threshold: 1.0,
-}
-const callback = function(entries, observer) {
-    entries.forEach(entry => {
+};
+const callback = async function(entries, observer) {
+    entries.forEach(async entry => {
         if (entry.isIntersecting) {
-            console.log(entry.intersectionRect);
             pixabay.incrementPage()
-            
+            observer.unobserve(entry.target);
+            try {
+                const { hits } = await pixabay.getPhotos();
+        
+                const markup = createMarkup(hits);
+        
+                refs.gallery.insertAdjacentHTML('beforeend', markup);
+                if (pixabay.isShowLoadMoreBtn) {
+                  const target = document.querySelector('.photo-card:last-child');
+                  io.observe(target);
+                }
+              } catch (error) {
+                Notify.failure(error.message, 'Oops something went wrong!');
+                clearPage();
+              }
         }
     });
 };
@@ -28,7 +43,7 @@ const handleSubmit = async evt => {
     const text = searchQuery.value.trim().toLowerCase();
     console.log(text);
     if (!text) {
-        refs.list.innerHTML = '';
+        refs.gallery.innerHTML = '';
         Notify.failure('Enter data to search')
         return;
     };
@@ -41,13 +56,14 @@ const handleSubmit = async evt => {
             return
         }
         const markup = createMarkup(hits);
-        refs.list.insertAdjacentHTML('beforeend', markup);
-        const target = document.querySelector('.gallery__item:last-child')
+        refs.gallery.insertAdjacentHTML('beforeend', markup);
+
+        const target = document.querySelector('.photo-card:last-child')
         io.observe(target);
         pixabay.calculateTotalPages(total);
         Notify.success(`We have found a ${total} images on the ${text} request`)
         if (pixabay.isShowLoadMoreBtn) {
-            refs.loadMoreBtn.classList.remove('is-hidden')
+            // refs.loadMoreBtn.classList.remove('is-hidden')
         } 
     } catch (error) {
         Notify.failure(error.message, "Sorry, there are no images matching your search query. Please try again.");
@@ -62,7 +78,9 @@ const onLoadMore = () => {
     } 
     pixabay.getPhotos().then(({hits}) => {
         const markup = createMarkup(hits);
-        refs.list.insertAdjacentHTML('beforeend', markup)
+        createGalleryImage(hits)
+        refs.gallery.insertAdjacentHTML('beforeend', markup)
+        simplelightbox.refresh()
     }).catch(error => {
         Notify.failure(error.message, "Sorry, there are no images matching your search query. Please try again.");
         clearPage()
@@ -74,11 +92,17 @@ refs.loadMoreBtn.addEventListener('click', onLoadMore);
 
 function clearPage() {
     pixabay.resetPage();
-    refs.list.innerHTML = '';
+    refs.gallery.innerHTML = '';
     refs.loadMoreBtn.classList.add('is-hidden');
   }
     
-  
 
 
-    
+// const lightbox = new SimpleLightbox('.gallery a', {captions: true, captionDelay: 250, captionsData: 'alt' });
+// const gallery = $('.gallery a').simpleLightbox();
+// gallery.next();
+// let gallery = new SimpleLightbox('.gallery a');
+// gallery.on('show.simplelightbox', function () {
+// 	// Do something…
+// });
+// let gallery = refs..simpleLightbox(); gallery.refresh(); gallery = ('.gallery a').simpleLightbox()

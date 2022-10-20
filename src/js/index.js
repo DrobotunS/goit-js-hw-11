@@ -23,6 +23,7 @@ const callback = async function(entries, observer) {
         if (entry.isIntersecting) {
             pixabay.incrementPage()
             observer.unobserve(entry.target);
+            lightbox.refresh();
             try {
                 const { hits } = await pixabay.getPhotos();
         
@@ -63,7 +64,7 @@ const handleSubmit = async evt => {
         }
         const markup = createMarkup(hits);
         refs.gallery.insertAdjacentHTML('beforeend', markup);
-
+lightbox.refresh();
         const target = document.querySelector('.photo-card:last-child')
         io.observe(target);
         pixabay.calculateTotalPages(total);
@@ -86,7 +87,7 @@ const onLoadMore = () => {
         const markup = createMarkup(hits);
         createGalleryImage(hits)
         refs.gallery.insertAdjacentHTML('beforeend', markup)
-        simplelightbox.refresh()
+        lightbox.refresh();
     }).catch(error => {
         Notify.failure(error.message, "Sorry, there are no images matching your search query. Please try again.");
         clearPage()

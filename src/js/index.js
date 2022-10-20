@@ -7,6 +7,12 @@ import {createMarkup} from './createMarkup';
 import {refs} from './refs';
 const pixabay = new Pixabay();
 
+let lightbox = new SimpleLightbox('.photo-card a', {
+  captions: true,
+  captionsData: 'alt',
+  captionDelay: 250,
+});
+
 const options = {
     root: null,
     rootMargin: '100px',
@@ -98,11 +104,3 @@ function clearPage() {
     
 
 
-// const lightbox = new SimpleLightbox('.gallery a', {captions: true, captionDelay: 250, captionsData: 'alt' });
-// const gallery = $('.gallery a').simpleLightbox();
-// gallery.next();
-// let gallery = new SimpleLightbox('.gallery a');
-// gallery.on('show.simplelightbox', function () {
-// 	// Do something…
-// });
-// let gallery = refs..simpleLightbox(); gallery.refresh(); gallery = ('.gallery a').simpleLightbox()

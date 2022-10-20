@@ -23,6 +23,7 @@ const callback = async function(entries, observer) {
         if (entry.isIntersecting) {
             pixabay.incrementPage()
             observer.unobserve(entry.target);
+            lightbox.refresh();
             try {
                 const { hits } = await pixabay.getPhotos();
                 const markup = createMarkup(hits);
@@ -31,7 +32,6 @@ const callback = async function(entries, observer) {
                 if (pixabay.isShowLoadMoreBtn) {
                   const target = document.querySelector('.photo-card:last-child');
                     io.observe(target);
-                    lightbox.refresh();
                 }
               } catch (error) {
                 Notify.failure(error.message, 'Oops something went wrong!');

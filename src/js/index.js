@@ -23,10 +23,8 @@ const callback = async function(entries, observer) {
         if (entry.isIntersecting) {
             pixabay.incrementPage()
             observer.unobserve(entry.target);
-            lightbox.refresh();
             try {
                 const { hits } = await pixabay.getPhotos();
-        
                 const markup = createMarkup(hits);
                 refs.gallery.insertAdjacentHTML('beforeend', markup);
                 lightbox.refresh();

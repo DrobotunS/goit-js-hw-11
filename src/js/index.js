@@ -30,7 +30,8 @@ const callback = async function(entries, observer) {
                 lightbox.refresh();
                 if (pixabay.isShowLoadMoreBtn) {
                   const target = document.querySelector('.photo-card:last-child');
-                  io.observe(target);
+                    io.observe(target);
+                    lightbox.refresh();
                 }
               } catch (error) {
                 Notify.failure(error.message, 'Oops something went wrong!');

@@ -28,8 +28,8 @@ const callback = async function(entries, observer) {
                 const { hits } = await pixabay.getPhotos();
         
                 const markup = createMarkup(hits);
-        lightbox.refresh();
                 refs.gallery.insertAdjacentHTML('beforeend', markup);
+                lightbox.refresh();
                 if (pixabay.isShowLoadMoreBtn) {
                   const target = document.querySelector('.photo-card:last-child');
                   io.observe(target);
@@ -64,13 +64,13 @@ const handleSubmit = async evt => {
         }
         const markup = createMarkup(hits);
         refs.gallery.insertAdjacentHTML('beforeend', markup);
-lightbox.refresh();
+        lightbox.refresh();
         const target = document.querySelector('.photo-card:last-child')
         io.observe(target);
         pixabay.calculateTotalPages(total);
         Notify.success(`We have found a ${total} images on the ${text} request`)
         if (pixabay.isShowLoadMoreBtn) {
-            // refs.loadMoreBtn.classList.remove('is-hidden')
+            refs.loadMoreBtn.classList.remove('is-hidden')
         } 
     } catch (error) {
         Notify.failure(error.message, "Sorry, there are no images matching your search query. Please try again.");

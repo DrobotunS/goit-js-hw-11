@@ -1,8 +1,6 @@
 import axios from 'axios';
 axios.defaults.baseURL = 'https://pixabay.com/api/';
-// axios.defaults.headers.common['Authorization'] = 'KEY 30572084-069004b26a8a8f55c86a46c9c';
 
-// const BACE_URL = `https://pixabay.com/api`;
 
 export class Pixabay {
     #page = 1;
@@ -14,7 +12,6 @@ export class Pixabay {
             image_type: 'image_type',
             orientation: 'horizontal',
             safesearch: 'true',
-            // page: 1,
             perPage: 40,
           },
       }

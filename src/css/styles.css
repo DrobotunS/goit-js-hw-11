@@ -12,31 +12,62 @@ body {
   line-height: 1.5;
 
 }
+.container {
+  width: 100%;
+  padding: 0 10px;
+  margin: 0 auto;
+  margin-top: 80px;
+}
 ul {
   list-style: none;
   padding-left: 0;
   
 }
-.gallery {
-  margin-left: auto;
-  margin-right: auto;
+#search-form {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  padding: 15px 0;
+  
+  background: #04104a;
+  background: linear-gradient(to right, #764de7, #220858);
+  box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.5);
 }
 
-#search-form {
-  font: inherit;
-  padding: 8px;
-  max-width: 320px;
-  margin-bottom: 16px;
+.search-form input {
+  width: 280px;
+  height: 30px;
+  padding: 10px;
+
+  font-size: 16px;
+
+  outline: none;
+  border: none;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  }
+
+.search-form input:placeholder {
+  font-size: 25px;
+  color: #1b0909a2;
 }
 .gallery {
   display: flex;
   flex-wrap: wrap;
-  margin-top: -30px;
-  margin-left: -10px;
+  margin-top: -15px;
+  margin-left: -15px;
+  display: flex;
+  justify-content: center;
 }
 .photo-card {
-  margin-left: 30px;
-  margin-top: 30px;
+  margin-left: 15px;
+  margin-top: 15px;
 }
 .is-hidden {
   position: absolute;
@@ -50,6 +81,48 @@ ul {
   clip-path: inset(50%);
   margin: -1px;
 }
+.search-form button {
+  width: 100px;
+  height: 30px;
+
+  font-size: 16px;
+
+  border: none;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+
+  cursor: pointer;
+  transition: background-color 300ms linear, color 300ms linear;
+}
+
+.search-form button:hover, .search-form button:focus {
+  background-color: #0f3443;
+  color: #ffffff;
+}
+.photo-card {
+  margin-bottom: 10px;
+  width: 300px;
+
+  box-shadow: 0px 3px 8px 0px rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  overflow: hidden;
+}
+.photo-card:last-child {
+  margin-bottom: 0;
+}
 .info {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+}
+.info-item {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
 }

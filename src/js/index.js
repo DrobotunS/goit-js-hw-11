@@ -69,7 +69,7 @@ const handleSubmit = async evt => {
         pixabay.calculateTotalPages(total);
         Notify.success(`We have found a ${total} images on the ${text} request`)
         if (pixabay.isShowLoadMoreBtn) {
-            refs.loadMoreBtn.classList.remove('is-hidden')
+            // refs.loadMoreBtn.classList.remove('is-hidden')
         } 
     } catch (error) {
         Notify.failure(error.message, "Sorry, there are no images matching your search query. Please try again.");
@@ -77,29 +77,29 @@ const handleSubmit = async evt => {
     }
 };
 
-const onLoadMore = () => {
-    pixabay.incrementPage()
-    if (!pixabay.isShowLoadMoreBtn) {
-        refs.loadMoreBtn.classList.add('is-hidden')
-    } 
-    pixabay.getPhotos().then(({hits}) => {
-        const markup = createMarkup(hits);
-        createGalleryImage(hits)
-        refs.gallery.insertAdjacentHTML('beforeend', markup)
-        lightbox.refresh();
-    }).catch(error => {
-        Notify.failure(error.message, "Sorry, there are no images matching your search query. Please try again.");
-        clearPage()
-    })
-}
+// const onLoadMore = () => {
+//     pixabay.incrementPage()
+//     if (!pixabay.isShowLoadMoreBtn) {
+//         refs.loadMoreBtn.classList.add('is-hidden')
+//     } 
+//     pixabay.getPhotos().then(({hits}) => {
+//         const markup = createMarkup(hits);
+//         createGalleryImage(hits)
+//         refs.gallery.insertAdjacentHTML('beforeend', markup)
+//         lightbox.refresh();
+//     }).catch(error => {
+//         Notify.failure(error.message, "Sorry, there are no images matching your search query. Please try again.");
+//         clearPage()
+//     })
+// }
 
 refs.form.addEventListener('submit', handleSubmit);
-refs.loadMoreBtn.addEventListener('click', onLoadMore);
+// refs.loadMoreBtn.addEventListener('click', onLoadMore);
 
 function clearPage() {
     pixabay.resetPage();
     refs.gallery.innerHTML = '';
-    refs.loadMoreBtn.classList.add('is-hidden');
+    // refs.loadMoreBtn.classList.add('is-hidden');
   }
     
 
